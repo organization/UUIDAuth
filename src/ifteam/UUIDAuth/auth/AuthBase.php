@@ -17,7 +17,8 @@ abstract class AuthBase extends Auth {
 	}
 	public function deauthenticatePlayer($player) {
 	}
-	public function cueAuthenticatePlayer($player);
+	public function cueAuthenticatePlayer($player) {
+	}
 	/**
 	 * Uses SHA-512 [http://en.wikipedia.org/wiki/SHA-2] and Whirlpool [http://en.wikipedia.org/wiki/Whirlpool_(cryptography)]
 	 *

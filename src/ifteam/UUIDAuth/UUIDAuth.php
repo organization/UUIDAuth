@@ -12,12 +12,14 @@ use ifteam\UUIDAuth\task\AutoSaveTask;
 use ifteam\UUIDAuth\importer\SimpleAuth\SimpleAuthImporter;
 use ifteam\UUIDAuth\auth\AuthDataLoader;
 use ifteam\UUIDAuth\auth\AuthDataProvider;
+use ifteam\UUIDAuth\auth\AuthManager;
 
 class UUIDAuth extends PluginBase implements Listener {
 	private $database;
 	private $eventListener;
 	private $authDataLoader;
 	private $authDataProvider;
+	private $authManager;
 	public $m_version = 1;
 	/**
 	 * Called when the plugin is enabled
@@ -29,6 +31,7 @@ class UUIDAuth extends PluginBase implements Listener {
 		
 		$this->authDataLoader = new AuthDataLoader ( $this );
 		$this->authDataProvider = new AuthDataProvider ( $this );
+		$this->authManager = new AuthManager ( $this->authDataProvider, $this->getServer (), $this );
 		$this->eventListener = new EventListener ( $this );
 		
 		$this->saveResource ( "config.yml", false );
