@@ -8,6 +8,7 @@ use pocketmine\utils\Config;
 use pocketmine\Server;
 use pocketmine\utils\TextFormat;
 use pocketmine\plugin\Plugin;
+use ifteam\UUIDAuth\auth\AuthProvider;
 
 class PluginData {
 	private static $instance = null;
@@ -149,6 +150,22 @@ class PluginData {
 	 */
 	public static function getInstance() {
 		return static::$instance;
+	}
+	public function addAuthReady($name, $hash) {
+		$name = strtolower ( $name );
+		if (AuthProvider::getInstance ()->checkToExistDataToName ( $name ) != false)
+			return;
+		if (! isset ( $this->db ["authready"] [$name] ))
+			$this->db ["authready"] [$name] = $hash;
+	}
+	public function checkAuthReady($name) {
+		$name = strtolower ( $name );
+		return isset ( $this->db ["authready"] [$name] ) ? true : false;
+	}
+	public function completeAuthReady($name) {
+		$name = strtolower ( $name );
+		if (isset ( $this->db ["authready"] [$name] ))
+			unset ( $this->db ["authready"] [$name] );
 	}
 }
 

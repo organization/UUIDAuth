@@ -2,19 +2,19 @@
 
 namespace ifteam\UUIDAuth;
 
-use UUIDAuth\database\PluginData;
-use UUIDAuth\listener\EventListener;
-use UUIDAuth\listener\other\ListenerLoader;
+use ifteam\UUIDAuth\database\PluginData;
+use ifteam\UUIDAuth\listener\EventListener;
+use ifteam\UUIDAuth\task\AutoSaveTask;
 use pocketmine\plugin\PluginBase;
 use pocketmine\event\Listener;
 use pocketmine\command\CommandSender;
 use pocketmine\command\Command;
-use ifteam\UUIDAuth\task\AutoSaveTask;
+use ifteam\UUIDAuth\importer\SimpleAuth\SimpleAuthImporter;
 
 class UUIDAuth extends PluginBase implements Listener {
 	private $database;
 	private $eventListener;
-	private $listenerLoader;
+	public $m_version = 1;
 	/**
 	 * Called when the plugin is enabled
 	 *
@@ -23,7 +23,20 @@ class UUIDAuth extends PluginBase implements Listener {
 	public function onEnable() {
 		$this->database = new PluginData ( $this );
 		$this->eventListener = new EventListener ( $this );
-		$this->listenerLoader = new ListenerLoader ( $this );
+		
+		$this->saveResource ( "config.yml", false );
+		$this->database->initMessage ();
+		
+		$this->database->registerCommand ( $this->database->get ( "login" ), "UUIDAuth.login", $this->database->get ( "login-help" ), "/" . $this->database->get ( "login" ) );
+		$this->database->registerCommand ( $this->database->get ( "logout" ), "UUIDAuth.logout", $this->database->get ( "logout-help" ), "/" . $this->database->get ( "logout" ) );
+		$this->database->registerCommand ( $this->database->get ( "register" ), "UUIDAuth.register", $this->database->get ( "register-help" ), "/" . $this->database->get ( "register" ) );
+		$this->database->registerCommand ( $this->database->get ( "unregister" ), "UUIDAuth.unregister", $this->database->get ( "unregister-help" ), "/" . $this->database->get ( "unregister" ) );
+		$this->database->registerCommand ( $this->database->get ( "otp" ), "UUIDAuth.otp", $this->database->get ( "otp-help" ), "/" . $this->database->get ( "otp" ) );
+		$this->database->registerCommand ( "uuidauth", "UUIDAuth.manage", $this->database->get ( "manage-help" ), "/uuidauth" );
+		
+		if (file_exists ( $this->getDataFolder () . "SimpleAuth/players" ))
+			SimpleAuthImporter::getSimpleAuthData ( $this );
+		
 		$this->getServer ()->getPluginManager ()->registerEvents ( $this, $this );
 		$this->getServer ()->getScheduler ()->scheduleRepeatingTask ( new AutoSaveTask ( $this ), 12000 );
 	}
@@ -62,12 +75,6 @@ class UUIDAuth extends PluginBase implements Listener {
 	 */
 	public function getEventListener() {
 		return $this->eventListener;
-	}
-	/**
-	 * Return Other Plug-in Event Listener
-	 */
-	public function getListenerLoader() {
-		return $this->listenerLoader;
 	}
 }
 

@@ -1,8 +1,8 @@
 <?php
 
-namespace UUIDAuth\listener;
+namespace ifteam\UUIDAuth\listener;
 
-use UUIDAuth\database\PluginData;
+use ifteam\UUIDAuth\database\PluginData;
 use pocketmine\event\Listener;
 use pocketmine\plugin\Plugin;
 use pocketmine\command\CommandSender;

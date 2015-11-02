@@ -93,6 +93,10 @@ class AuthLoader {
 			$this->loadAuth ( $userName );
 		return $this->users [$userName];
 	}
+	public function checkToExistDataToName($name) {
+		$userName = strtolower ( $name );
+		return isset ( $this->users [$userName] ) ? true : false;
+	}
 	public function save($async = false) {
 		foreach ( $this->users as $userName => $authData )
 			if ($authData instanceof AuthData)

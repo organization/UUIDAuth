@@ -3,7 +3,6 @@
 namespace ifteam\UUIDAuth\auth;
 
 use ifteam\UUIDAuth\UUIDAuth;
-use pocketmine\utils\Config;
 use pocketmine\Server;
 use pocketmine\Player;
 
@@ -28,11 +27,6 @@ class AuthProvider {
 	 * @var Server
 	 */
 	private $server;
-	/**
-	 *
-	 * @var AuthProvider DB
-	 */
-	private $db;
 	public function __construct(UUIDAuth $plugin) {
 		if (self::$instance == null)
 			self::$instance = $this;
@@ -40,13 +34,6 @@ class AuthProvider {
 		$this->plugin = $plugin;
 		$this->loader = $plugin->getAuthLoader ();
 		$this->server = Server::getInstance ();
-		
-		$this->db = (new Config ( $this->plugin->getDataFolder () . "pluginDB.yml", Config::YAML, [ ] ))->getAll ();
-	}
-	public function save($async = false) {
-		$config = new Config ( $this->plugin->getDataFolder () . "pluginDB.yml", Config::YAML );
-		$config->setAll ( $this->db );
-		$config->save ( $async );
 	}
 	
 	/**
@@ -65,6 +52,9 @@ class AuthProvider {
 	}
 	public function getAuthToName($name) {
 		return $this->loader->getAuthToName ( $name );
+	}
+	public function checkToExistDataToName($name) {
+		return $this->loader->checkToExistDataToName ( $name );
 	}
 	public static function getInstance() {
 		return static::$instance;

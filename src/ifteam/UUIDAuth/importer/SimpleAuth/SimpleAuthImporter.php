@@ -4,9 +4,10 @@ namespace ifteam\UUIDAuth\importer\SimpleAuth;
 
 use pocketmine\plugin\Plugin;
 use pocketmine\utils\Config;
+use ifteam\UUIDAuth\database\PluginData;
 
 class SimpleAuthImporter {
-	public static function getSimpleAuthData(Plugin $plugin) {
+	public static function getSimpleAuthData(Plugin $plugin, $db = null) {
 		if (! file_exists ( $plugin->getDataFolder () . "SimpleAuth/players" ))
 			return;
 		$config = (new Config ( $plugin->getDataFolder () . "SimpleAuth/config.yml", Config::YAML ))->getAll ();
@@ -29,16 +30,17 @@ class SimpleAuthImporter {
 				$provider = new DummyDataProvider ( $plugin );
 				break;
 		}
-		$folderList = $plugin->getFolderList ( $plugin->getDataFolder () . "SimpleAuth/players", "folder" );
+		$folderList = self::getFolderList ( $plugin->getDataFolder () . "SimpleAuth/players", "folder" );
 		foreach ( $folderList as $alphabet ) {
-			$ymlList = $plugin->getFolderList ( $plugin->getDataFolder () . "SimpleAuth/players/" . $alphabet, "file" );
+			$ymlList = self::getFolderList ( $plugin->getDataFolder () . "SimpleAuth/players/" . $alphabet, "file" );
 			foreach ( $ymlList as $ymlName ) {
 				$yml = (new Config ( $plugin->getDataFolder () . "SimpleAuth/players/" . $alphabet . "/" . $ymlName, Config::YAML ))->getAll ();
 				$name = explode ( ".", $ymlName ) [0];
-				$plugin->db->addAuthReady ( mb_convert_encoding ( $name, "UTF-8" ), $yml ["hash"] );
+				if ($db instanceof PluginData)
+					$db->addAuthReady ( mb_convert_encoding ( $name, "UTF-8" ), $yml ["hash"] );
 			}
 		}
-		$plugin->rmdirAll ( $plugin->getDataFolder () . "SimpleAuth" );
+		self::rmdirAll ( $plugin->getDataFolder () . "SimpleAuth" );
 	}
 	/**
 	 *
@@ -84,7 +86,7 @@ class SimpleAuthImporter {
 		while ( false !== ($entry = $dirs->read ()) ) {
 			if (($entry != '.') && ($entry != '..')) {
 				if (is_dir ( $dir . '/' . $entry )) {
-					$this->rmdirAll ( $dir . '/' . $entry );
+					self::rmdirAll ( $dir . '/' . $entry );
 				} else {
 					@unlink ( $dir . '/' . $entry );
 				}
