@@ -1,0 +1,10 @@
+name: UUIDAuth
+main: ifteam\UUIDAuth\UUIDAuth
+version: 1.0-Test
+author: hm
+api:
+- 1.0.0
+- 1.4.0
+- 1.12.0
+- 1.13.0
+- 2.0.0
