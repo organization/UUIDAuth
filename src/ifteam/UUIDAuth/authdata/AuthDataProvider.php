@@ -6,10 +6,10 @@ use ifteam\UUIDAuth\UUIDAuth;
 use pocketmine\Server;
 use pocketmine\Player;
 
-class AuthProvider {
+class AuthDataProvider {
 	/**
 	 *
-	 * @var AuthProvider
+	 * @var AuthDataProvider
 	 */
 	private static $instance = null;
 	/**
@@ -19,7 +19,7 @@ class AuthProvider {
 	private $plugin;
 	/**
 	 *
-	 * @var AuthLoader
+	 * @var AuthDataLoader
 	 */
 	private $loader;
 	/**

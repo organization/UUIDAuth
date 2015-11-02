@@ -2,18 +2,22 @@
 
 namespace ifteam\UUIDAuth;
 
-use ifteam\UUIDAuth\database\PluginData;
-use ifteam\UUIDAuth\listener\EventListener;
-use ifteam\UUIDAuth\task\AutoSaveTask;
 use pocketmine\plugin\PluginBase;
 use pocketmine\event\Listener;
 use pocketmine\command\CommandSender;
 use pocketmine\command\Command;
+use ifteam\UUIDAuth\database\PluginData;
+use ifteam\UUIDAuth\listener\EventListener;
+use ifteam\UUIDAuth\task\AutoSaveTask;
 use ifteam\UUIDAuth\importer\SimpleAuth\SimpleAuthImporter;
+use ifteam\UUIDAuth\auth\AuthDataLoader;
+use ifteam\UUIDAuth\auth\AuthDataProvider;
 
 class UUIDAuth extends PluginBase implements Listener {
 	private $database;
 	private $eventListener;
+	private $authDataLoader;
+	private $authDataProvider;
 	public $m_version = 1;
 	/**
 	 * Called when the plugin is enabled
@@ -22,6 +26,9 @@ class UUIDAuth extends PluginBase implements Listener {
 	 */
 	public function onEnable() {
 		$this->database = new PluginData ( $this );
+		
+		$this->authDataLoader = new AuthDataLoader ( $this );
+		$this->authDataProvider = new AuthDataProvider ( $this );
 		$this->eventListener = new EventListener ( $this );
 		
 		$this->saveResource ( "config.yml", false );
@@ -75,6 +82,12 @@ class UUIDAuth extends PluginBase implements Listener {
 	 */
 	public function getEventListener() {
 		return $this->eventListener;
+	}
+	public function getAuthLoader() {
+		return $this->authDataLoader;
+	}
+	public function getAuthProvider() {
+		return $this->authDataProvider;
 	}
 }
 

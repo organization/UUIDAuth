@@ -7,7 +7,7 @@ use pocketmine\Server;
 use ifteam\UUIDAuth\UUIDAuth;
 use ifteam\UUIDAuth\task\AutoUnloadTask;
 
-class AuthLoader {
+class AuthDataLoader {
 	private static $instance = null;
 	/**
 	 *
