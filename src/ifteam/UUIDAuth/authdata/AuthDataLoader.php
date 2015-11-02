@@ -6,6 +6,7 @@ use pocketmine\Player;
 use pocketmine\Server;
 use ifteam\UUIDAuth\UUIDAuth;
 use ifteam\UUIDAuth\task\AutoUnloadTask;
+use ifteam\UUIDAuth\authdata\AuthData;
 
 class AuthDataLoader {
 	private static $instance = null;
@@ -68,6 +69,10 @@ class AuthDataLoader {
 		}
 		unset ( $this->users [$userName] );
 		return true;
+	}
+	public function removeAuth($userName) {
+		$this->unloadAuth ( $userName );
+		@unlink ( $this->plugin->getDataFolder () . "player/" . $userName . ".json" );
 	}
 	/**
 	 * Get Auth Data

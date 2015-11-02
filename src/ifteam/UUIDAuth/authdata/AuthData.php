@@ -3,6 +3,7 @@
 namespace ifteam\UUIDAuth\authdata;
 
 use pocketmine\utils\Config;
+use pocketmine\Player;
 
 class AuthData {
 	private $userName;
@@ -44,6 +45,10 @@ class AuthData {
 	}
 	public function getUUID() {
 		return $this->data ["uuid"];
+	}
+	public function logout(Player $player) {
+		$this->setIp ( $player );
+		$this->setUUID ( $player->getUniqueId () );
 	}
 }
 

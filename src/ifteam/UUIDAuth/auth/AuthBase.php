@@ -28,7 +28,7 @@ abstract class AuthBase extends Auth {
 	}
 	public function cueAuthenticatePlayer($player) {
 	}
-	public function onCommand(CommandSender $sender, Command $command, $label, array $args) {
+	public function onCommand(CommandSender $player, Command $command, $label, array $args) {
 	}
 	/**
 	 * Uses SHA-512 [http://en.wikipedia.org/wiki/SHA-2] and Whirlpool [http://en.wikipedia.org/wiki/Whirlpool_(cryptography)]

@@ -47,9 +47,24 @@ class AuthDataProvider {
 	public function unloadAuth($userName = null) {
 		return $this->loader->unloadAuth ( $userName );
 	}
+	public function removeAuth($userName) {
+		return $this->loader->removeAuth ( $userName );
+	}
+	/**
+	 * Get Auth Data
+	 *
+	 * @param Player $player        	
+	 * @return AuthData
+	 */
 	public function getAuth(Player $player) {
 		return $this->loader->getAuth ( $player );
 	}
+	/**
+	 * Get Auth Data
+	 *
+	 * @param string $player        	
+	 * @return AuthData
+	 */
 	public function getAuthToName($name) {
 		return $this->loader->getAuthToName ( $name );
 	}

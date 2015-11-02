@@ -65,7 +65,7 @@ class PluginData {
 		if (isset ( $this->messages [$this->getServer ()->getLanguage ()->getLang ()] )) {
 			$lang = $this->getServer ()->getLanguage ()->getLang ();
 		} else {
-			$lang = "eng";
+			return null;
 		}
 		return $this->messages [$lang . "-" . $var];
 	}
