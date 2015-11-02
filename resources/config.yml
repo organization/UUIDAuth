@@ -11,6 +11,9 @@ default-prefix: "[ 서버 ]"
 
 #Time to wait for authentication
 authenticateTimeout: 60
+
+#NormalAuth
+authentication: "NormalAuth"
 #-----------------------------------------------------
 
 #CUSTOMPACKET SETTINGS

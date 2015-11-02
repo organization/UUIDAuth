@@ -3,21 +3,32 @@
 namespace ifteam\UUIDAuth\auth;
 
 use pocketmine\Server;
+use ifteam\UUIDAuth\UUIDAuth;
+use pocketmine\command\CommandSender;
+use pocketmine\command\Command;
 
 abstract class AuthBase extends Auth {
 	/** @var \ifteam\UUIDAuth\auth\AuthDataProvider */
 	private $provider;
 	/** @var \pocketmine\Server */
 	private $server;
-	public final function init(AuthDataProvider $provider, Server $server) {
+	/** @var \ifteam\UUIDAuth\UUIDAuth  */
+	private $plugin;
+	public final function init(AuthDataProvider $provider, Server $server, UUIDAuth $plugin) {
 		$this->provider = $provider;
 		$this->server = $server;
+		$this->plugin = $plugin;
+		$this->onLoad ();
+	}
+	public function onLoad() {
 	}
 	public function authenticatePlayer($player) {
 	}
 	public function deauthenticatePlayer($player) {
 	}
 	public function cueAuthenticatePlayer($player) {
+	}
+	public function onCommand(CommandSender $sender, Command $command, $label, array $args) {
 	}
 	/**
 	 * Uses SHA-512 [http://en.wikipedia.org/wiki/SHA-2] and Whirlpool [http://en.wikipedia.org/wiki/Whirlpool_(cryptography)]
@@ -35,13 +46,24 @@ abstract class AuthBase extends Auth {
 	}
 	/**
 	 *
-	 * @return Server
+	 * @return \pocketmine\Server
 	 */
 	public final function getServer() {
 		return $this->server;
 	}
+	/**
+	 *
+	 * @return \ifteam\UUIDAuth\auth\AuthDataProvider
+	 */
 	public final function getAuthProvider() {
 		return $this->provider;
+	}
+	/**
+	 *
+	 * @return \ifteam\UUIDAuth\UUIDAuth
+	 */
+	public final function getPlugin() {
+		return $this->plugin;
 	}
 }
 

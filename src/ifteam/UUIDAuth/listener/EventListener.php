@@ -38,29 +38,6 @@ class EventListener implements Listener {
 	public function getServer() {
 		return $this->server;
 	}
-	public function onCommand(CommandSender $player, Command $command, $label, array $args) {
-		// TODO - 명령어처리용
-		if (strtolower ( $command ) == $this->db->get ( "" )) { // TODO <- 빈칸에 명령어
-			if (! isset ( $args [0] )) {
-				// TODO - 명령어만 쳤을경우 도움말 표시
-				return true;
-			}
-			switch (strtlower ( $args [0] )) {
-				case $this->db->get ( "" ) :
-					// TODO ↗ 빈칸에 세부명령어
-					// TODO 세부명령어 실행시 원하는 작업 실행
-					break;
-				case $this->db->get ( "" ) :
-					// TODO ↗ 빈칸에 세부명령어
-					// TODO 세부명령어 실행시 원하는 작업 실행
-					break;
-				default :
-					// TODO - 잘못된 명령어 입력시 도움말 표시
-					break;
-			}
-			return true;
-		}
-	}
 }
 
 ?>

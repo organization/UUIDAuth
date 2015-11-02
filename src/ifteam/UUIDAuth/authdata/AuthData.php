@@ -7,9 +7,7 @@ use pocketmine\utils\Config;
 class AuthData {
 	private $userName;
 	private $dataFolder;
-	private $data;
-	private $nowSpecialPrefix = null;
-	private $specialPrefixList = [ ];
+	public $data;
 	public function __construct($userName, $dataFolder) {
 		$userName = strtolower ( $userName );
 		
@@ -28,6 +26,24 @@ class AuthData {
 		$data = new Config ( $this->dataFolder . $this->userName . ".json", Config::JSON );
 		$data->setAll ( $this->data );
 		$data->save ( $async );
+	}
+	public function setIp($ip) {
+		$this->data ["ip"] = $ip;
+	}
+	public function setPassWordHash($hash) {
+		$this->data ["password"] = $hash;
+	}
+	public function setUUID($uuid) {
+		$this->data ["uuid"] = $uuid;
+	}
+	public function getIp() {
+		return $this->data ["ip"];
+	}
+	public function getPassWordHash() {
+		return $this->data ["password"];
+	}
+	public function getUUID() {
+		return $this->data ["uuid"];
 	}
 }
 

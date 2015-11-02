@@ -72,7 +72,8 @@ class UUIDAuth extends PluginBase implements Listener {
 	 * @see \pocketmine\plugin\PluginBase::onCommand()
 	 */
 	public function onCommand(CommandSender $sender, Command $command, $label, array $args) {
-		return $this->eventListener->onCommand ( $sender, $command, $label, $args );
+		// TODO
+		// return $this->eventListener->onCommand ( $sender, $command, $label, $args );
 	}
 	/**
 	 * Return Plug-in Database
