@@ -1,0 +1,9 @@
+m_version: 1
+
+#(EN) ENGLISH
+eng: true
+#eng-hello: "Hello!"
+
+#(KO) KOREAN
+kor: true
+#kor-hello: "안녕하세요!"
