@@ -55,6 +55,7 @@ class PluginData {
 		$command->setPermission ( $permission );
 		$command->setUsage ( $usage );
 		$commandMap->register ( $name, $command );
+		return $command;
 	}
 	/**
 	 * Gets a translated message

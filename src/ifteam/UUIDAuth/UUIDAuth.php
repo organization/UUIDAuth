@@ -37,9 +37,6 @@ class UUIDAuth extends PluginBase implements Listener {
 		$this->saveResource ( "config.yml", false );
 		$this->database->initMessage ();
 		
-		$this->database->registerCommand ( $this->database->get ( "login" ), "UUIDAuth.login", $this->database->get ( "login-help" ), "/" . $this->database->get ( "login" ) );
-		$this->database->registerCommand ( $this->database->get ( "logout" ), "UUIDAuth.logout", $this->database->get ( "logout-help" ), "/" . $this->database->get ( "logout" ) );
-		$this->database->registerCommand ( $this->database->get ( "register" ), "UUIDAuth.register", $this->database->get ( "register-help" ), "/" . $this->database->get ( "register" ) );
 		$this->database->registerCommand ( $this->database->get ( "unregister" ), "UUIDAuth.unregister", $this->database->get ( "unregister-help" ), "/" . $this->database->get ( "unregister" ) );
 		$this->database->registerCommand ( $this->database->get ( "otp" ), "UUIDAuth.otp", $this->database->get ( "otp-help" ), "/" . $this->database->get ( "otp" ) );
 		$this->database->registerCommand ( "uuidauth", "UUIDAuth.manage", $this->database->get ( "manage-help" ), "/uuidauth" );
@@ -48,7 +45,7 @@ class UUIDAuth extends PluginBase implements Listener {
 			SimpleAuthImporter::getSimpleAuthData ( $this );
 		
 		$this->getServer ()->getPluginManager ()->registerEvents ( $this, $this );
-		$this->getServer ()->getScheduler ()->scheduleRepeatingTask ( new AutoSaveTask ( $this ), 12000 );
+		// $this->getServer ()->getScheduler ()->scheduleRepeatingTask ( new AutoSaveTask ( $this ), 12000 );
 	}
 	/**
 	 * Called when the plugin is disabled Use this to free open things and finish actions
@@ -73,7 +70,6 @@ class UUIDAuth extends PluginBase implements Listener {
 	 */
 	public function onCommand(CommandSender $sender, Command $command, $label, array $args) {
 		// TODO
-		// return $this->eventListener->onCommand ( $sender, $command, $label, $args );
 	}
 	/**
 	 * Return Plug-in Database

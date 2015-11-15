@@ -2,7 +2,7 @@
 
 namespace ifteam\UUIDAuth\auth\network\slave;
 
-use ifteam\UUIDAuth\auth\AuthBase;
+use ifteam\UUIDAuth\auth\base\AuthBase;
 use pocketmine\event\Listener;
 use pocketmine\command\CommandSender;
 use pocketmine\command\Command;
