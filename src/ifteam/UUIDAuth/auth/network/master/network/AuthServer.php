@@ -16,15 +16,21 @@ use ifteam\UUIDAuth\auth\network\protocol\LogoutRequestPacket;
 use ifteam\UUIDAuth\auth\network\protocol\RegisterRequestPacket;
 use ifteam\UUIDAuth\auth\network\protocol\UnregisterRequestPacket;
 use ifteam\UUIDAuth\auth\network\protocol\DataPacket;
+use ifteam\UUIDAuth\auth\base\AuthBase;
+use ifteam\UUIDAuth\auth\network\master\network\PacketProcessor;
 
 class AuthServer implements Listener {
 	private static $instance = null;
 	private $server;
 	private $plugin;
 	private $customPacket;
-	public function __construct(Plugin $plugin) {
+	private $packetProcessor;
+	private $auth;
+	public function __construct(Plugin $plugin, AuthBase $auth) {
 		$this->server = Server::getInstance ();
 		$this->plugin = $plugin;
+		$this->auth = $auth;
+		
 		$this->customPacket = $this->server->getPluginManager ()->getPlugin ( "CustomPacket" );
 		
 		if (! $this->customPacket instanceof \ifteam\CustomPacket\MainLoader)
@@ -34,6 +40,9 @@ class AuthServer implements Listener {
 		
 		if (self::$instance === null)
 			self::$instance = $this;
+		
+		new PacketProcessor ( $auth );
+		$this->packetProcessor = PacketProcessor::getInstance ();
 	}
 	public function onCustomPacketReceiveEvent(CustomPacketReceiveEvent $event) {
 		$packet = ( array ) json_decode ( $ev->getPacket ()->data, true );
@@ -54,7 +63,7 @@ class AuthServer implements Listener {
 			return;
 		
 		$dataPacket->decode ( $packet );
-		// TODO PROCESS PACKET
+		$this->packetProcessor->process ( $dataPacket );
 	}
 	/**
 	 *
@@ -91,6 +100,9 @@ class AuthServer implements Listener {
 		}
 		
 		return $packet;
+	}
+	public static function getInstance() {
+		return self::$instance;
 	}
 }
 

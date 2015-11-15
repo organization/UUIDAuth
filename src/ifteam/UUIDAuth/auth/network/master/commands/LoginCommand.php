@@ -8,7 +8,6 @@ use pocketmine\command\Command;
 
 class LoginCommand extends LoginBase {
 	public function onCommand(CommandSender $player, Command $command, $label, array $args) {
-		//
 	}
 }
 

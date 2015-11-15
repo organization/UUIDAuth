@@ -37,7 +37,6 @@ class UUIDAuth extends PluginBase implements Listener {
 		$this->saveResource ( "config.yml", false );
 		$this->database->initMessage ();
 		
-		$this->database->registerCommand ( $this->database->get ( "unregister" ), "UUIDAuth.unregister", $this->database->get ( "unregister-help" ), "/" . $this->database->get ( "unregister" ) );
 		$this->database->registerCommand ( $this->database->get ( "otp" ), "UUIDAuth.otp", $this->database->get ( "otp-help" ), "/" . $this->database->get ( "otp" ) );
 		$this->database->registerCommand ( "uuidauth", "UUIDAuth.manage", $this->database->get ( "manage-help" ), "/uuidauth" );
 		

@@ -1,6 +1,6 @@
 <?php
 
-namespace ifteam\UUIDAuth\auth;
+namespace ifteam\UUIDAuth\auth\base;
 
 use pocketmine\Server;
 use ifteam\UUIDAuth\UUIDAuth;

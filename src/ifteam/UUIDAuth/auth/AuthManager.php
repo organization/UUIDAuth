@@ -7,6 +7,7 @@ use ifteam\UUIDAuth;
 use ifteam\UUIDAuth\auth\network\NormalAuth;
 
 class AuthManager {
+	private static $instance = null;
 	/** @var \pocketmine\Server */
 	private $server;
 	/** @var \ifteam\UUIDAuth\auth\AuthDataProvider */
@@ -15,6 +16,9 @@ class AuthManager {
 	private $plugin;
 	private $auths = [ ];
 	public function __construct(AuthDataProvider $provider, Server $server, UUIDAuth $plugin) {
+		if (self::$instance === null)
+			self::$instance = $this;
+		
 		$this->server = $server;
 		$this->provider = $provider;
 		$this->plugin = $plugin;
@@ -75,6 +79,13 @@ class AuthManager {
 	 */
 	public function getAuths() {
 		return $this->auths;
+	}
+	/**
+	 *
+	 * @return AuthManager
+	 */
+	public static function getInstance() {
+		return self::$instance;
 	}
 }
 
